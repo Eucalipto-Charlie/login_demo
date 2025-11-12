@@ -80,13 +80,13 @@ async fn register(
         Ok(_) => (
             StatusCode::OK,
             Json(ApiResponse {
-                message: "✅ 用户注册成功".into(),
+                message: "用户注册成功".into(),
             }),
         ),
         Err(e) => (
             StatusCode::BAD_REQUEST,
             Json(ApiResponse {
-                message: format!("❌ 注册失败: {}", e),
+                message: format!("注册失败: {}", e),
             }),
         ),
     }
@@ -101,20 +101,19 @@ async fn login(State(state): State<AppState>, Json(req): Json<LoginRequest>) -> 
 
     match user {
         Ok(record) => {
-            // record.get::<String, _>("password") 获取字段值
             let password: String = record.try_get("password").unwrap();
             if password == req.password {
                 (
                     StatusCode::OK,
                     Json(ApiResponse {
-                        message: "✅ 登录成功".into(),
+                        message: "登录成功".into(),
                     }),
                 )
             } else {
                 (
                     StatusCode::UNAUTHORIZED,
                     Json(ApiResponse {
-                        message: "❌ 密码错误".into(),
+                        message: "密码错误".into(),
                     }),
                 )
             }
@@ -122,7 +121,7 @@ async fn login(State(state): State<AppState>, Json(req): Json<LoginRequest>) -> 
         Err(_) => (
             StatusCode::NOT_FOUND,
             Json(ApiResponse {
-                message: "❌ 用户不存在".into(),
+                message: "用户不存在".into(),
             }),
         ),
     }
@@ -137,7 +136,7 @@ async fn change_password(
         return (
             StatusCode::BAD_REQUEST,
             Json(ApiResponse {
-                message: "❌ 新密码两次输入不一致".into(),
+                message: "新密码两次输入不一致".into(),
             }),
         );
     }
@@ -154,7 +153,7 @@ async fn change_password(
                 return (
                     StatusCode::UNAUTHORIZED,
                     Json(ApiResponse {
-                        message: "❌ 原密码错误".into(),
+                        message: "原密码错误".into(),
                     }),
                 );
             }
@@ -169,13 +168,13 @@ async fn change_password(
                 Ok(_) => (
                     StatusCode::OK,
                     Json(ApiResponse {
-                        message: "✅ 密码修改成功".into(),
+                        message: "密码修改成功".into(),
                     }),
                 ),
                 Err(e) => (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     Json(ApiResponse {
-                        message: format!("❌ 修改失败: {}", e),
+                        message: format!("修改失败: {}", e),
                     }),
                 ),
             }
@@ -183,7 +182,7 @@ async fn change_password(
         Err(_) => (
             StatusCode::NOT_FOUND,
             Json(ApiResponse {
-                message: "❌ 用户不存在".into(),
+                message: "用户不存在".into(),
             }),
         ),
     }
